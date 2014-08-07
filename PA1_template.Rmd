@@ -6,11 +6,15 @@ author: "Fernando Villarroel"
 This assignment is answering the questions detailed in the questionary. it is completed in a single R markdown document, and later processed by knitr and transformed into an HTML file.
    
 ####Loading and preprocessing the data
-The data is loaded in a data.frame with the name of ***activity***, the Class of every column is assigned at this moment:
+The data is loaded in a data.frame with the name of ***activity***, the Class of every column is assigned in this stage, also the scientific notation is "turn off":
 
 ```{r LoadData}
 activity<-read.csv("activity.csv",colClasses=c("numeric","POSIXct","numeric"))
+options(scipen=999)
 ```
+
+
+
 ####What is mean total number of steps taken per day?
   
 Firt is calculated the total steps taken per day and it is saved in a data.frame with the  name ***DailyActSumDF***.  
@@ -18,7 +22,7 @@ Firt is calculated the total steps taken per day and it is saved in a data.frame
 The **mean** and **median** total number of steps taken per day are calculated and stored in the variables ***DailyActMean*** and ***DailyActMedian*** respectivily.  
 
 ```{r DailyActivity}
-DailyActSum<-tapply(activity$steps,activity$date,sum,na.rm=F)
+DailyActSum<-tapply(activity$steps,activity$date,sum,na.rm=T)
 DailyNames<-names(DailyActSum)
 DailyActSum<-as.numeric(DailyActSum)
 DailyActSumDF<-data.frame(Date=DailyNames,TotalSteps=DailyActSum)
@@ -26,7 +30,7 @@ DailyActMean<-round(mean(DailyActSum,na.rm=T),0)
 DailyActMedian<-round(median(DailyActSum,na.rm=T),0)
 ```
   
-The Plot is builded using **ggplot2***.  
+The Plot is builded using ***ggplot2***.  
 
 ```{r HistDailyActivity,fig.height=4}
 
@@ -64,7 +68,7 @@ IntervalActMaxLog<-IntervalActMean==IntervalActMax
 MaxInterval<-IntervalNames[IntervalActMaxLog]
 ```
   
-The Plot is builded using **ggplot2***.  
+The Plot is builded using ***ggplot2***.  
 
 ```{r TimeSeriePlot,fig.height=4}
 
@@ -124,7 +128,7 @@ DailyActNoNAMedian<-round(median(DailyActNoNASum,na.rm=T),0)
 DifMedian<-abs(DailyActNoNAMedian-DailyActMedian)
 ```
   
-The Plot is builded using **ggplot2***.  
+The Plot is builded using ***ggplot2***.  
 
 ```{r HistDailyActNoNA,fig.height=4}
 
@@ -183,7 +187,7 @@ IntervalActNoNAMeanDF<-rbind(IntervalActNoNAMeanDFWD,IntervalActNoNAMeanDFWE)
 
 ```
   
-The Plot is builded using **ggplot2***.  
+The Plot is builded using ***ggplot2***.  
 
 ```{r TimeSeriePlotperTypeDay,fig.height=4}
 
